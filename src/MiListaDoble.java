@@ -127,22 +127,94 @@ public class MiListaDoble implements ListInterface {
 
     @Override
     public boolean insertHead(Object object) {
-        return false;
+        if (object == null) return false;
+
+        DoubleNode nuevo = new DoubleNode(object);
+
+        if (cabeza == null) {
+            cabeza = nuevo;
+            return true;
+        }
+
+        nuevo.siguiente = cabeza;
+        cabeza.anterior = nuevo;
+        cabeza = nuevo;
+
+        return true;
     }
 
     @Override
     public boolean insertTail(Object object) {
-        return false;
+        if (object == null) return false;
+
+        DoubleNode nuevo = new DoubleNode(object);
+
+        if (cabeza == null) {
+            cabeza = nuevo;
+            return true;
+        }
+
+        DoubleNode actual = cabeza;
+        while (actual.siguiente != null) {
+            actual = actual.siguiente;
+        }
+
+        actual.siguiente = nuevo;
+        nuevo.anterior = actual;
+
+        return true;
     }
 
     @Override
     public boolean set(DoubleNode node, Object object) {
+        if (node == null || object == null) return false;
+
+        DoubleNode actual = cabeza;
+        while (actual != null) {
+            if (actual == node) {
+                actual.dato = object;
+                return true;
+            }
+            actual = actual.siguiente;
+        }
         return false;
     }
 
     @Override
     public boolean remove(DoubleNode node) {
-        return false;
+        if (node == null || cabeza == null) return false;
+
+        // Verificamos que el nodo pertenezca a esta lista
+        DoubleNode actual = cabeza;
+        boolean pertenece = false;
+        while (actual != null) {
+            if (actual == node) {
+                pertenece = true;
+                break;
+            }
+            actual = actual.siguiente;
+        }
+        if (!pertenece) return false;
+
+        // Caso especial: es la cabeza
+        if (node == cabeza) {
+            cabeza = node.siguiente;
+            if (cabeza != null) {
+                cabeza.anterior = null;
+            }
+            return true;
+        }
+        
+        DoubleNode anteriorNodo = node.anterior;
+        DoubleNode siguienteNodo = node.siguiente;
+
+        anteriorNodo.siguiente = siguienteNodo;
+
+        if (siguienteNodo != null) {
+            siguienteNodo.anterior = anteriorNodo;
+        }
+
+        return true;
     }
 
     @Override
