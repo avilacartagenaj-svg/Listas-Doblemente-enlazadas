@@ -204,7 +204,7 @@ public class MiListaDoble implements ListInterface {
             }
             return true;
         }
-        
+
         DoubleNode anteriorNodo = node.anterior;
         DoubleNode siguienteNodo = node.siguiente;
 
@@ -219,17 +219,45 @@ public class MiListaDoble implements ListInterface {
 
     @Override
     public boolean contains(Object object) {
-        return false;
+        return search(object) != null;
     }
 
     @Override
     public Object[] toArray() {
-        return new Object[0];
+        Object[] arreglo = new Object[getSize()];
+        DoubleNode actual = cabeza;
+        int i = 0;
+
+        while (actual != null) {
+            arreglo[i] = actual.dato;
+            i++;
+            actual = actual.siguiente;
+        }
+        return arreglo;
     }
 
     @Override
     public Object[] toArray(Object[] object) {
-        return new Object[0];
+        int size = getSize();
+
+        if (object.length < size) {
+            object = new Object[size];
+        }
+
+        DoubleNode actual = cabeza;
+        int i = 0;
+
+        while (actual != null) {
+            object[i] = actual.dato;
+            i++;
+            actual = actual.siguiente;
+        }
+
+        if (object.length > size) {
+            object[size] = null;
+        }
+
+        return object;
     }
 
     @Override
