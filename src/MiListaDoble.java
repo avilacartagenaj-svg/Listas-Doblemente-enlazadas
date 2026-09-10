@@ -302,4 +302,25 @@ public class MiListaDoble implements ListInterface {
 
         return ordenada;
     }
+
+    @Override
+    public String toString() {
+        if (cabeza == null) {
+            return "[]";
+        }
+
+        String resultado = "[";
+        DoubleNode actual = cabeza;
+
+        while (actual != null) {
+            resultado = resultado + actual.dato;
+            if (actual.siguiente != null) {
+                resultado = resultado + ", ";
+            }
+            actual = actual.siguiente;
+        }
+        resultado = resultado + "]";
+
+        return resultado;
+    }
 }
