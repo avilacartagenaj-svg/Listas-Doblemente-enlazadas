@@ -262,11 +262,44 @@ public class MiListaDoble implements ListInterface {
 
     @Override
     public MiListaDoble subList(DoubleNode from, DoubleNode to) {
-        return null;
+        if (from == null || to == null) return null;
+
+        MiListaDoble sub = new MiListaDoble();
+        DoubleNode actual = from;
+        boolean encontrado = false;
+
+        while (actual != null) {
+            sub.insertTail(actual.dato);
+            if (actual == to) {
+                encontrado = true;
+                break;
+            }
+            actual = actual.siguiente;
+        }
+
+        return encontrado ? sub : null;
     }
 
     @Override
     public MiListaDoble sortList() {
-        return null;
+        MiListaDoble ordenada = new MiListaDoble();
+        Object[] arreglo = this.toArray();
+
+        for (int i = 0; i < arreglo.length - 1; i++) {
+            for (int j = 0; j < arreglo.length - 1 - i; j++) {
+                Comparable actual = (Comparable) arreglo[j];
+                if (actual.compareTo(arreglo[j + 1]) > 0) {
+                    Object temp = arreglo[j];
+                    arreglo[j] = arreglo[j + 1];
+                    arreglo[j + 1] = temp;
+                }
+            }
+        }
+
+        for (Object dato : arreglo) {
+            ordenada.insertTail(dato);
+        }
+
+        return ordenada;
     }
 }
